@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "dc" do |cfg|
     cfg.vm.box = "gusztavvargadr/windows-server"
     cfg.vm.hostname = hostname
-    cfg.vm.boot_timeout = 600
+    cfg.vm.boot_timeout = 800
 
     # From https://github.com/splitbrain/vagrant-active-directory
     # use the plaintext WinRM transport and force it to use basic authentication.
@@ -35,10 +35,12 @@ Vagrant.configure("2") do |config|
     cfg.vm.provider "virtualbox" do |vb, override|
       vb.name = vmname
       vb.gui = false
+      vb.default_nic_type = "virtio"
       vb.customize ["modifyvm", :id, "--memory", 1024]
       vb.customize ["modifyvm", :id, "--cpus", 2]
       vb.customize ["modifyvm", :id, "--vram", "16"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      vb.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
       vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
       vb.customize ["modifyvm", :id, "--macaddress1", "auto"]
       vb.customize ["modifyvm", :id, "--macaddress2", "auto"]

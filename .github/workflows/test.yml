@@ -10,12 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # https://github.blog/changelog/2024-04-02-github-actions-hardware-accelerated-android-virtualization-now-available/
-      #- name: Enable KVM group perms
-      #  shell: bash
-      #  run: |
-      #    echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-      #    sudo udevadm control --reload-rules
-      #    sudo udevadm trigger --name-match=kvm
+      - name: Enable KVM group perms
+        shell: bash
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Set up Vagrant & VirtualBox
         shell: bash
         run: |

